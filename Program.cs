@@ -12,8 +12,8 @@ namespace _28._2
         class Banca
         {
             public string nomeBanca;
-            List <Cliente> datiClienti = new List <Cliente> ();
-            ArrayList datiPrestiti = new ArrayList();
+            public List <Cliente> datiClienti = new List <Cliente> ();
+            public List <Prestito> datiPrestiti = new List<Prestito> ();
             public Banca() { }
             public Banca(string nomeBanca)
             {
@@ -25,7 +25,14 @@ namespace _28._2
             }
             public void AddPrestito(Prestito p)
             {
-                datiPrestiti.Add(p);
+                foreach(var cliente in datiClienti)
+                {
+                    if(cliente == p.c)
+                    {
+                        datiPrestiti.Add(p);
+                        break;  
+                    }
+                }
             }
             public void RemCliente(Cliente c)
             {
@@ -37,7 +44,33 @@ namespace _28._2
                     }
                 }
             }
-
+            public string Search(string codiceF)
+            {
+                string x = "";
+                string y = "";
+                foreach (var cliente in datiClienti)
+                {
+                    if(cliente.codiceF == codiceF)
+                    {
+                        x = string.Format("{0} {1} {2}", cliente.nome, cliente.cognome, cliente.stipendio);
+                    }
+                }
+                foreach (var prestito in datiPrestiti)
+                {
+                    if (prestito.c.codiceF == codiceF)
+                    {
+                        y = string.Format("{0} {1} {2} {3}", prestito.ammontare, prestito.rata, prestito.dataInizio, prestito.dataFine);
+                    }
+                }
+                if(x == "" && y == "")
+                {
+                    return "Cliente non trovato";
+                }
+                else 
+                {
+                    return x + y;
+                }
+            }
         }
         class Cliente
         {
@@ -90,8 +123,14 @@ namespace _28._2
             Cliente paolo = new Cliente("paolo", "zucchi", "PZ136", 700);
             Prestito p1 = new Prestito(marco, 3000, 100, new DateTime(2018, 10, 11), new DateTime(2021, 2, 5));
             Banca Bpm = new Banca();
+
             Bpm.AddCliente(marco);
             Bpm.AddPrestito(p1);
+            p1.ToString();
+            marco.ToString();
+            Bpm.datiClienti[0].nome = "Mirco";
+            Bpm.Search("GBD");
+            Console.ReadLine();
         }
     }
 }
