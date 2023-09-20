@@ -126,10 +126,11 @@ namespace _28._2
 
             Bpm.AddCliente(marco);
             Bpm.AddPrestito(p1);
-            p1.ToString();
-            marco.ToString();
+            Console.WriteLine(p1.ToString());
+            Console.WriteLine(marco.ToString());
             Bpm.datiClienti[0].nome = "Mirco";
-            Bpm.Search("GBD");
+            Console.WriteLine(Bpm.datiClienti[0].nome);
+            Console.WriteLine(Bpm.Search("MN232"));
             Console.ReadLine();
         }
     }
